@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:default_password) {"123123123"}
-  let(:user) { create(:user , password: default_password)}
+  let(:user) { create(:user)}
 
   context 'validate username' do 
     subject do 
       described_class.new({
         username: "admin123",
-        password: default_password,
+        password: "123123123",
       })
     end
 
@@ -50,5 +49,27 @@ RSpec.describe User, type: :model do
       subject.password = "p"*55
       expect(subject).not_to be_valid
     end
+  end
+
+  context "user authenticate" do 
+    subject { user.authenticate password }
+    
+    context "with valid account" do 
+      let(:password) {user.password}
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "with invalid account" do 
+      let(:password) {"111111111"}
+
+      it { is_expected.to be_falsy }
+    end
+  end
+
+  context "user generate_access_token" do 
+    subject { user.generate_access_token }
+
+    it{ is_expected.to be_truthy}
   end
 end
