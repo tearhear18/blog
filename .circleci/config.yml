@@ -1,0 +1,47 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/configuration-reference
+version: 2.1
+
+# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
+# See: https://circleci.com/docs/orb-intro/
+orbs:
+  ruby: circleci/ruby@2.0.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/configuration-reference/#jobs
+executors:
+  ruby-docker: 
+    docker:
+      - image: ruby:3.2.2
+        environment: 
+          POSTGRES_HOST: 127.0.0.1
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 7qX&krIwP3<l(QoB
+      - image: postgres
+        environment:
+          POSTGRES_PASSWORD: 7qX&krIwP3<l(QoB
+
+jobs:
+  prepare_and_test:
+    executor: ruby-docker
+    steps:
+      - checkout
+      - run:
+          name: Install Bundle
+          command: bundle install
+      - run: 
+          name: Database Migration 
+          command: rails db:setup
+      - run:
+          name: Rspec Test
+          command: rspec 
+      
+workflows:
+  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run.
+    jobs:
+      - prepare_and_test:
+          filters:
+            branches:
+              only:
+                - /.*/
