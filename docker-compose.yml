@@ -1,0 +1,25 @@
+version: '3.2'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 7qX&krIwP3<l(QoB
+  web:
+    build: .
+    command: >
+      sh -c "rails s -b 0.0.0.0"
+    volumes:
+      - .:/workspace
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 7qX&krIwP3<l(QoB
+    depends_on:
+      - db
