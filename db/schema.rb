@@ -15,10 +15,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_18_004036) do
   enable_extension "plpgsql"
 
   create_table "blog_contents", force: :cascade do |t|
+    t.bigint "user_id"
     t.string "title"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_blog_contents_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -26,6 +28,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_18_004036) do
     t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "blog_contents", "users"
 end
