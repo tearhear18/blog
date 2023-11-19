@@ -3,7 +3,7 @@ class AuthToken < ApplicationRecord
     
     TOKEN_EXPIRE_AFTER = 1.hour
     
-    before_commit :add_token_expiration
+    before_create :add_token_expiration
 
     def active?
         valid_at >= Time.current
