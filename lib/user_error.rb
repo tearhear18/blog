@@ -1,8 +1,10 @@
-class UserError < StandardError
-    attr_reader :code
+# frozen_string_literal: true
 
-    def initialize(message, code)
-      @code = code 
-      super(message)
-    end
+class UserError < StandardError
+  attr_reader :code
+
+  def initialize(message, code)
+    @code = code
+    super(message)
+  end
 end

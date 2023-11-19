@@ -1,0 +1,18 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'config/**/*'    # Exclude files under 'config' directory
+    - 'db/**/*'        # Exclude files under 'db' directory
+    - 'spec/**/*'      # Exclude files under 'spec' directory
+    - 'test/**/*' 
+    - 'bin/**/*' 
+    - 'log/**/*' 
+    - 'public/**/*' 
+    - 'temp/**/*' 
+    - 'storage/**/*' 
+Style/CommentAnnotation:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/FetchEnvVar:
+  Enabled: false

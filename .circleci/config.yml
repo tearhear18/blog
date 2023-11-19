@@ -35,12 +35,30 @@ jobs:
       - run:
           name: Rspec Test
           command: rspec 
+  prepare_and_rubocop:
+    executor: ruby-docker
+    steps:
+      - checkout
+      - run:
+          name: Install Bundle
+          command: bundle install
+      - run: 
+          name: Database Migration 
+          command: rails db:setup
+      - run:
+          name: Rubocop
+          command: rubocop 
       
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - prepare_and_test:
+          filters:
+            branches:
+              only:
+                - /.*/
+      - prepare_and_rubocop:
           filters:
             branches:
               only:
