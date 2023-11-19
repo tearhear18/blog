@@ -3,6 +3,7 @@ class BlogsController < ApplicationController
 
     def search
         blogs = current_user.blog_contents.search params[:q]
+        authorize blogs
         render json: {
             message: 'success',
             blogs: ActiveModel::Serializer::CollectionSerializer.new(
@@ -12,8 +13,9 @@ class BlogsController < ApplicationController
         }
     end
 
-    def index 
+    def index
         blogs = current_user.blog_contents
+        authorize blogs
         render json: {
             message: 'success',
             blogs: ActiveModel::Serializer::CollectionSerializer.new(
@@ -35,6 +37,7 @@ class BlogsController < ApplicationController
 
     def show 
         blog = current_user.blog_contents.find_by_id(params[:id])
+        authorize blog
         render json: {
             message: :blog_created, 
             blog: BlogSerializer.new(
@@ -45,6 +48,7 @@ class BlogsController < ApplicationController
 
     def update 
         blog = current_user.blog_contents.find_by_id(params[:id])
+        authorize blog
         blog.update blog_params
         render json: {
             message: :blog_updated, 
@@ -56,6 +60,7 @@ class BlogsController < ApplicationController
 
     def destroy 
         blog = current_user.blog_contents.find_by_id(params[:id])
+        authorize blog
         blog.destroy
         render json: {message: :blog_deleted}
     end
