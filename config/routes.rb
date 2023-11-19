@@ -6,5 +6,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :blogs, only:[:create]
+  resources :blogs do 
+    collection do 
+      get :search
+    end
+  end
 end
