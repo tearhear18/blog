@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class BlogsController < ApplicationController
-  before_action :authorize_request
+  before_action :authorize_request, except: %i[index show search]
 
   def search
-    blogs = current_user.blog_contents.search params[:q]
-    authorize blogs
+    blogs = BlogContent.search params[:q]
     render json: {
       message: 'success',
       blogs: ActiveModel::Serializer::CollectionSerializer.new(
@@ -16,8 +15,7 @@ class BlogsController < ApplicationController
   end
 
   def index
-    blogs = current_user.blog_contents
-    authorize blogs
+    blogs = BlogContent.all
     render json: {
       message: 'success',
       blogs: ActiveModel::Serializer::CollectionSerializer.new(
@@ -38,8 +36,7 @@ class BlogsController < ApplicationController
   end
 
   def show
-    blog = current_user.blog_contents.find_by_id(params[:id])
-    authorize blog
+    blog = BlogContent.find(params[:id])
     render json: {
       message: :blog_created,
       blog: BlogSerializer.new(
