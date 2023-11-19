@@ -10,10 +10,11 @@ class BlogContentPolicy < ApplicationPolicy
             # return true if user.admin? || user.editor?
             if record.respond_to?(:to_a)
                 return true if record.empty?
-                record.pluck(:user_id).uniq.include? @user.id
+                return record.pluck(:user_id).uniq.include? @user.id
             else
-                record.user_id == @user.id
+                return record.user_id == @user.id
             end
+            return false
         end
     end
 end

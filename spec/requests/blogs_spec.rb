@@ -75,15 +75,28 @@ RSpec.describe "Blogs", type: :request do
             }
     end
 
-    let(:params){{id: blogs.pluck(:id).sample, title: "Updated Title", body: "Updated Body"}}
+    context 'valid user' do
+      let(:params){{id: blogs.pluck(:id).sample, title: "Updated Title", body: "Updated Body"}}
 
-    before { subject }
-    it do 
-      expect(response).to have_http_status(:ok)
-      res = response.parsed_body
-      expect(res.keys).to eq(["message", "blog"])
-      expect(res["blog"]["title"]).to eq("Updated Title")
-      expect(res["blog"]["body"]).to eq("Updated Body")
+      before { subject }
+      it do 
+        expect(response).to have_http_status(:ok)
+        res = response.parsed_body
+        expect(res.keys).to eq(["message", "blog"])
+        expect(res["blog"]["title"]).to eq("Updated Title")
+        expect(res["blog"]["body"]).to eq("Updated Body")
+      end
+    end
+
+    context 'in valid user' do
+      let(:params){{id: blogs.pluck(:id).sample, title: "Updated Title", body: "Updated Body"}}
+      let(:user2){ create(:user)}
+      let(:auth){ user2.generate_access_token }
+      
+      before { subject }
+      it do 
+        expect(response).to have_http_status(401)
+      end
     end
   end
 
@@ -95,13 +108,25 @@ RSpec.describe "Blogs", type: :request do
               HTTP_AUTHORIZATION: "Bearer token=#{auth.token}"
             }
     end
+    context 'valid user' do
+      let(:params){{id: blogs.pluck(:id).sample}}
 
-    let(:params){{id: blogs.pluck(:id).sample}}
+      before { subject }
+      it do 
+        expect(response).to have_http_status(:ok)
+        expect(user.blog_contents.count).to eq(4)
+      end
+    end
 
-    before { subject }
-    it do 
-      expect(response).to have_http_status(:ok)
-      expect(user.blog_contents.count).to eq(4)
+    context 'in valid user' do
+      let(:params){{id: blogs.pluck(:id).sample}}
+      let(:user2){ create(:user)}
+      let(:auth){ user2.generate_access_token }
+
+      before { subject }
+      it do 
+        expect(response).to have_http_status(401)
+      end
     end
   end
 
@@ -151,5 +176,4 @@ RSpec.describe "Blogs", type: :request do
       end
     end
   end
-  
 end
