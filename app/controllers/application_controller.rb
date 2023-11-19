@@ -10,12 +10,15 @@ class ApplicationController < ActionController::API
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def authorize_request
-    authenticate_with_http_token do |token, _options|
+    authorization = authenticate_with_http_token do |token, _options|
       token = AuthToken.find_by_token(token)
       raise UserError.new(:unauthorized, :unauthorized) if token.nil? || token.expired?
 
       @current_user = token.user
     end
+    return unless authorization.nil?
+
+    raise UserError.new(:unauthorized, :unauthorized)
   end
 
   private

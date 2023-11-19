@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BlogContentPolicy < ApplicationPolicy
-  POLICIES = %i[update? delete? show? search? index? create? destroy?].freeze
+  POLICIES = %i[update? destroy?].freeze
 
   POLICIES.each do |policy|
     # just skip if you manually define custom policy for paricular method
