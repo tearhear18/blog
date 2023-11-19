@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+	include ActionController::HttpAuthentication::Token::ControllerMethods
+
     attr_reader :current_user
     
     rescue_from ::UserError, with: :user_error_occured

@@ -5,4 +5,6 @@ Rails.application.routes.draw do
       post :login
     end
   end
+
+  resources :blogs, only:[:create]
 end
