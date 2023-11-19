@@ -1,21 +1,23 @@
+# frozen_string_literal: true
+
 class AuthToken < ApplicationRecord
-    belongs_to :user
-    
-    TOKEN_EXPIRE_AFTER = 1.hour
-    
-    before_create :add_token_expiration
+  belongs_to :user
 
-    def active?
-        valid_at >= Time.current
-    end
+  TOKEN_EXPIRE_AFTER = 1.hour
 
-    def expired? 
-        !active?
-    end
-    
-    private
+  before_create :add_token_expiration
 
-    def add_token_expiration 
-        self.valid_at = Time.current + TOKEN_EXPIRE_AFTER
-    end
+  def active?
+    valid_at >= Time.current
+  end
+
+  def expired?
+    !active?
+  end
+
+  private
+
+  def add_token_expiration
+    self.valid_at = Time.current + TOKEN_EXPIRE_AFTER
+  end
 end
