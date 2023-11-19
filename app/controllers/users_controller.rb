@@ -3,7 +3,7 @@
 class UsersController < ApplicationController
   def login
     user = User.find_by_username(user_params[:username])
-    raise UserError.new('Invalid Account', :unauthorized) if user.nil?
+    raise UserError.new(:invalid_account, :unauthorized) if user.nil?
 
     raise UserError.new(:invalid_account, :unauthorized) unless user.authenticate user_params[:password]
 
