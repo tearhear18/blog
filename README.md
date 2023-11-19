@@ -13,4 +13,5 @@ RSPEC
     docker compose run web rspec
 ```
 AUTHORIZATION
- is using Bearer Token
+get the access_token from login
+use access token to Bearer Token Header Authentication
