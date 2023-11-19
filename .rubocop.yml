@@ -6,6 +6,10 @@ AllCops:
     - 'spec/**/*'      # Exclude files under 'spec' directory
     - 'test/**/*' 
     - 'bin/**/*' 
+    - 'log/**/*' 
+    - 'public/**/*' 
+    - 'temp/**/*' 
+    - 'storage/**/*' 
 Style/CommentAnnotation:
   Enabled: false
 Style/Documentation:
