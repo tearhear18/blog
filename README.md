@@ -12,3 +12,5 @@ RSPEC
 ```bash
     docker compose run web rspec
 ```
+AUTHORIZATION
+ is using Bearer Token
