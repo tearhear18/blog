@@ -13,12 +13,12 @@ jobs:
         ports:
           - "5432:5432"
         env:
-          POSTGRES_DB: ehatud_test
+          POSTGRES_DB: blog_test
           POSTGRES_PASSWORD: 123123123
           POSTGRES_USER: rails
     env:
       RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/ehatud_test"
+      DATABASE_URL: localhost
       POSTGRES_PASSWORD: 123123123
       POSTGRES_USER: rails
     steps:
