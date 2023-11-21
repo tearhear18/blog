@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  test:
+  RSPEC:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -13,40 +13,36 @@ jobs:
         ports:
           - "5432:5432"
         env:
-          POSTGRES_DB: ehatud_test
+          POSTGRES_DB: blog_test
           POSTGRES_PASSWORD: 123123123
+          POSTGRES_USER: rails
     env:
-      RAILS_ENV: ehatud_test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/ehatud_test"
+      RAILS_ENV: test
       POSTGRES_PASSWORD: 123123123
+      POSTGRES_USER: rails
+      POSTGRES_HOST: localhost
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Add x86_64-linux to lockfile
-        run: bundle lock --add-platform x86_64-linux
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.2
           bundler-cache: true
       - name: Set up database schema
-        run: bin/rails db:schema:load
+        run: bin/rails db:setup
       - name: Run tests
         run: bin/rake
 
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-  #     - name: Install Ruby and gems
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: 3.2.2
-  #         bundler-cache: true
-  #     - name: Security audit dependencies
-  #       run: bin/bundler-audit --update
-  #     - name: Security audit application code
-  #       run: bin/brakeman -q -w2
-  #     - name: Lint Ruby files
-  #       run: bin/rubocop --parallel
+  RUBOCOP:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+      - name: Lint Ruby files
+        run: bundle exec rubocop --parallel
