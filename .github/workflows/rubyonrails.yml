@@ -16,7 +16,7 @@ jobs:
           POSTGRES_DB: ehatud_test
           POSTGRES_PASSWORD: 123123123
     env:
-      RAILS_ENV: ehatud_test
+      RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/ehatud_test"
       POSTGRES_PASSWORD: 123123123
     steps:
