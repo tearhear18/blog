@@ -44,7 +44,5 @@ jobs:
         with:
           ruby-version: 3.2.2
           bundler-cache: true
-      - name: Set up database schema
-        run: bin/rails db:setup
       - name: Lint Ruby files
         run: bin/rubocop --parallel
