@@ -46,11 +46,11 @@ group :development, :test do
   gem 'faker'
   gem 'pry'
   gem 'rspec-rails'
+  gem 'rubocop-rails', require: false
 end
 
 group :development do
   gem 'bullet'
-  gem 'rubocop-rails', require: false
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
