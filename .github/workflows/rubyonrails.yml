@@ -15,10 +15,12 @@ jobs:
         env:
           POSTGRES_DB: ehatud_test
           POSTGRES_PASSWORD: 123123123
+          POSTGRES_USER: rails
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/ehatud_test"
       POSTGRES_PASSWORD: 123123123
+      POSTGRES_USER: rails
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
