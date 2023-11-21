@@ -18,9 +18,9 @@ jobs:
           POSTGRES_USER: rails
     env:
       RAILS_ENV: test
-      DATABASE_URL: localhost
       POSTGRES_PASSWORD: 123123123
       POSTGRES_USER: rails
+      POSTGRES_HOST: localhost
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
